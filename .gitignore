@@ -1,0 +1,5 @@
+*.md
+*.png
+*pdf
+
+.vscode/
