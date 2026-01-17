@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <style></style>
+  </head>
+  <body>
+    <div class="add-task">
+      <input type="text" id="task-input" placeholder="Enter a new task" />
+      <!-- TASK STATUS PLACEHOLDER FOR PENDING/COMPLETED -->
+      <label for="task-status">Status:</label>
+      <select id="task-status" name="task-status">
+        <option value="pending">Pending</option>
+        <option value="completed">Completed</option>
+      </select>
+
+      <button id="add-task-button">Add Task</button>
+    </div>
+
+    <br />
+    <div class="task-list">
+      <h2>Task List</h2>
+
+      <!-- Hidden Filter Label -->
+      <label for="task-filter" style="display: none">Show Tasks</label>
+      <select id="task-filter" name="task-filter" style="display: none">
+        <option value="all">All</option>
+        <option value="pending">Pending</option>
+        <option value="completed">Completed</option>
+      </select>
+
+      <ul id="tasks-ul">
+        <!-- TASK ITEMS WILL BE ADDED HERE -->
+      </ul>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
