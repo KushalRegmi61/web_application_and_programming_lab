@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Marks Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* styles.css */
+
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        }
+
+        table, th, td {
+        border: 1px solid black;
+        }
+
+        th, td {
+        padding: 8px;
+        text-align: left;
+        }
+        
+    button {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #45a049;
+        }
+    
+    input[type="text"], input[type="number"] {
+        padding: 8px;
+        margin: 5px 0;
+        box-sizing: border-box;
+        }
+
+
+/* changing background color for the  */
+    </style>
+  </head>
+  <div class="user-input">
+    <h2>Enter Student Name</h2>
+    <input type="text" id="student-name" placeholder="Student Name" />
+
+    <!-- Select subject and enter Marks -->
+    <h2>Enter Marks for Subjects</h2>
+    <div class="subject-marks">
+      <div class="subject">
+        <label for="maths">Maths:</label>
+        <input type="number" id="maths" min="0" max="100" placeholder="Marks" />
+      </div>
+      <div class="subject">
+        <label for="science">Science:</label>
+        <input
+          type="number"
+          id="science"
+          min="0"
+          max="100"
+          placeholder="Marks"
+        />
+      </div>
+      <div class="subject">
+        <label for="english">English:</label>
+        <input
+          type="number"
+          id="english"
+          min="0"
+          max="100"
+          placeholder="Marks"
+        />
+      </div>
+    </div>
+    <button id="analyze-button">Analyze Marks</button>
+  </div>
+
+  <!-- Table to display analysis results -->
+    <div class="results">
+        <h2>Analysis Results</h2>
+        <table id="results-table">
+
+        </table>
+  <body>
+    <script src="index.js"></script>
+  </body>
+</html>
