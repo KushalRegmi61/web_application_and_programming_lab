@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attention Is All You Need</title>
+  </head>
+  <body>
+    <h1>Attention Is All You Need</h1>
+    <p><a href="index.html">← Back to Home</a></p>
+
+    <p>
+      In 2017, a team at Google published a paper that would fundamentally
+      change artificial intelligence. The Transformer architecture they
+      introduced has become the backbone of modern AI systems, from ChatGPT to
+      Google's search algorithms.
+    </p>
+
+    <h2>The Problem with Sequential Processing</h2>
+    <p>
+      Before transformers, the dominant architectures for processing sequences
+      (like text) were Recurrent Neural Networks (RNNs) and their variants like
+      LSTMs and GRUs. These models processed data sequentially – one word at a
+      time – which created two major problems:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Slow training:</strong> Since each step depended on the previous
+        one, you couldn't parallelize the computation. Training was inherently
+        slow.
+      </li>
+      <li>
+        <strong>Long-range dependencies:</strong> Information from the beginning
+        of a sequence would "fade" as it passed through many steps, making it
+        hard to capture relationships between distant words.
+      </li>
+    </ul>
+
+    <p>
+      The Transformer solved both problems with an elegant idea:
+      <strong>attention</strong>. Instead of processing sequentially, why not
+      let every word look at every other word simultaneously?
+    </p>
+
+    <h2>Understanding Self-Attention</h2>
+
+    <p>
+      Self-attention is the core mechanism that makes transformers work. The
+      intuition is simple: when processing a word, we want to know which other
+      words in the sentence are most relevant to understanding it.
+    </p>
+
+    <p>
+      <strong>💡 Key Insight:</strong> In the sentence "The cat sat on the mat
+      because it was tired," the word "it" could refer to either "cat" or "mat."
+      Self-attention learns to assign higher attention weights to "cat" because
+      that's what's semantically relevant.
+    </p>
+
+    <p>
+      The mechanism works through three learned transformations for each word:
+    </p>
+
+    <ul>
+      <li><strong>Query (Q):</strong> "What am I looking for?"</li>
+      <li><strong>Key (K):</strong> "What do I contain?"</li>
+      <li>
+        <strong>Value (V):</strong> "What information do I have to share?"
+      </li>
+    </ul>
+
+    <p>
+      The attention score between two words is computed by taking the dot
+      product of the Query of one word with the Key of another. Higher scores
+      mean stronger attention. These scores are then used to create a weighted
+      sum of the Values.
+    </p>
+
+    <pre>Attention(Q, K, V) = softmax(QK^T / √d_k) V</pre>
+
+    <p>
+      The division by √d_k (the square root of the key dimension) is a scaling
+      factor that prevents the dot products from becoming too large, which would
+      push the softmax into regions with tiny gradients.
+    </p>
+
+    <h2>Multi-Head Attention</h2>
+
+    <p>
+      A single attention mechanism can only capture one type of relationship.
+      But words often have multiple types of relationships with other words –
+      syntactic, semantic, positional, and more.
+    </p>
+
+    <p>
+      Multi-head attention solves this by running several attention mechanisms
+      in parallel (the "heads"), each with different learned Q, K, V
+      transformations. The outputs are concatenated and projected again:
+    </p>
+
+    <pre>
+MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W^O
+where head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)</pre
+    >
+
+    <p>
+      In the original paper, they used 8 attention heads. This allows the model
+      to jointly attend to information from different representation subspaces
+      at different positions.
+    </p>
+
+    <h2>Positional Encoding</h2>
+
+    <p>
+      Here's a subtle problem: attention is permutation invariant. If you
+      shuffle the words in a sentence, pure attention would give the same
+      outputs (just shuffled). But word order matters enormously in language!
+    </p>
+
+    <p>
+      The solution is positional encoding. Before feeding words into the
+      transformer, we add a signal that encodes each word's position in the
+      sequence. The original paper used sinusoidal functions:
+    </p>
+
+    <pre>
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))</pre
+    >
+
+    <p>
+      This encoding has nice properties: it allows the model to learn to attend
+      to relative positions, and it can extrapolate to sequence lengths longer
+      than those seen during training.
+    </p>
+
+    <h2>The Complete Architecture</h2>
+
+    <p>
+      The Transformer consists of an encoder and a decoder, each made of stacked
+      identical layers:
+    </p>
+
+    <h3>Encoder</h3>
+    <p>Each encoder layer has two sublayers:</p>
+    <ol>
+      <li>
+        <strong>Multi-head self-attention:</strong> Each position attends to all
+        positions in the input.
+      </li>
+      <li>
+        <strong>Position-wise feed-forward network:</strong> Two linear
+        transformations with a ReLU activation in between, applied to each
+        position separately.
+      </li>
+    </ol>
+    <p>Both sublayers have residual connections and layer normalization.</p>
+
+    <h3>Decoder</h3>
+    <p>Each decoder layer has three sublayers:</p>
+    <ol>
+      <li>
+        <strong>Masked multi-head self-attention:</strong> Like the encoder's,
+        but masked to prevent attending to future positions.
+      </li>
+      <li>
+        <strong>Encoder-decoder attention:</strong> Queries come from the
+        decoder, keys and values from the encoder.
+      </li>
+      <li>
+        <strong>Position-wise feed-forward network:</strong> Same as in the
+        encoder.
+      </li>
+    </ol>
+
+    <p>
+      <strong>🔑 Why Masking?</strong> During training, we feed the entire
+      target sequence to the decoder at once for efficiency. But the model
+      shouldn't be able to "cheat" by looking at future words. The mask sets
+      attention scores for future positions to negative infinity before the
+      softmax, effectively zeroing them out.
+    </p>
+
+    <h2>Why It Works So Well</h2>
+
+    <p>The Transformer's success comes from several factors:</p>
+
+    <ul>
+      <li>
+        <strong>Parallelization:</strong> Unlike RNNs, all positions can be
+        computed simultaneously, enabling massive parallelization on GPUs and
+        TPUs.
+      </li>
+      <li>
+        <strong>Constant path length:</strong> Information can flow directly
+        between any two positions in a sequence, regardless of their distance.
+        In RNNs, distant positions require information to pass through many
+        steps, leading to degradation.
+      </li>
+      <li>
+        <strong>Flexible attention patterns:</strong> The model learns which
+        words to attend to, rather than being constrained by a fixed window or
+        structure.
+      </li>
+      <li>
+        <strong>Scalability:</strong> The architecture scales remarkably well.
+        Larger transformers with more layers and attention heads consistently
+        improve performance.
+      </li>
+    </ul>
+
+    <h2>The Impact</h2>
+
+    <p>
+      The Transformer didn't just improve NLP – it revolutionized it. Within a
+      few years of its publication:
+    </p>
+
+    <ul>
+      <li>
+        <strong>BERT (2018):</strong> Bidirectional encoder representations,
+        pre-trained on massive text and fine-tuned for specific tasks.
+      </li>
+      <li>
+        <strong>GPT series (2018-2023):</strong> Decoder-only transformers that
+        can generate coherent text and now power ChatGPT.
+      </li>
+      <li>
+        <strong>T5 (2019):</strong> Framed all NLP tasks as text-to-text, using
+        the full encoder-decoder architecture.
+      </li>
+      <li>
+        <strong>Vision Transformers (2020):</strong> Applied transformers to
+        images, challenging the dominance of CNNs.
+      </li>
+    </ul>
+
+    <p>
+      Today, transformers are the foundation of virtually all state-of-the-art
+      AI systems, from language models to image generators to protein structure
+      predictors.
+    </p>
+
+    <h2>Conclusion</h2>
+
+    <p>
+      The title "Attention Is All You Need" was both a technical statement and a
+      bold claim. By showing that attention alone – without recurrence or
+      convolution – could achieve state-of-the-art results, the authors opened a
+      new era in deep learning.
+    </p>
+
+    <p>
+      The Transformer's elegance lies in its simplicity: it's fundamentally just
+      matrix multiplications arranged cleverly. Yet this simple mechanism,
+      scaled up with enough data and compute, has proven capable of remarkable
+      feats of language understanding and generation.
+    </p>
+
+    <blockquote>
+      "The Transformer is the first sequence transduction model based entirely
+      on attention, replacing the recurrent layers most commonly used in
+      encoder-decoder architectures with multi-headed self-attention." — Vaswani
+      et al., 2017
+    </blockquote>
+
+    <h3>Further Reading:</h3>
+    <ul>
+      <li>
+        Original Paper: "Attention Is All You Need" (Vaswani et al., 2017)
+      </li>
+      <li>The Illustrated Transformer by Jay Alammar</li>
+      <li>
+        <a href="vision-transformer.html"
+          >Our article on Vision Transformers (ViT)</a
+        >
+      </li>
+    </ul>
+  </body>
+</html>

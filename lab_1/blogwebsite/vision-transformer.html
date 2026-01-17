@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vision Transformer (ViT)</title>
+  </head>
+  <body>
+    <h1>Vision Transformer (ViT)</h1>
+    <p><a href="index.html">← Back to Home</a></p>
+
+    <p>
+      What if we treated images like sentences? In 2020, Google researchers
+      asked this question and created the Vision Transformer – proving that the
+      attention mechanism could match or beat convolutional neural networks at
+      their own game.
+    </p>
+
+    <h2>The Reign of Convolutional Neural Networks</h2>
+    <p>
+      Since AlexNet's breakthrough in 2012, Convolutional Neural Networks (CNNs)
+      have dominated computer vision. The key insight of CNNs is that images
+      have local structure – nearby pixels are more related than distant ones.
+      Convolutions exploit this by:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Local connectivity:</strong> Each neuron only sees a small patch
+        of the input
+      </li>
+      <li>
+        <strong>Weight sharing:</strong> The same filter is applied across the
+        entire image
+      </li>
+      <li>
+        <strong>Translation equivariance:</strong> A cat is a cat regardless of
+        where it appears in the image
+      </li>
+    </ul>
+
+    <p>
+      These inductive biases made CNNs incredibly sample-efficient. They could
+      learn from relatively small datasets because the architecture already
+      "knows" that images have spatial structure.
+    </p>
+
+    <p>
+      But this strength is also a limitation. CNNs build up global understanding
+      gradually, through many layers of local operations. What if we could let
+      every part of the image interact with every other part directly?
+    </p>
+
+    <h2>Enter the Vision Transformer</h2>
+
+    <p>
+      The Vision Transformer (ViT), introduced in the paper "An Image is Worth
+      16x16 Words," applies the Transformer architecture to images with minimal
+      modifications. The key innovation is elegant: treat image patches as
+      tokens.
+    </p>
+
+    <p>
+      <strong>💡 The Core Idea:</strong> Split an image into fixed-size patches
+      (e.g., 16×16 pixels). Flatten each patch into a vector. These patch
+      vectors become the "tokens" that the transformer processes, just like
+      words in a sentence.
+    </p>
+
+    <h2>How ViT Works</h2>
+
+    <h3>1. Patch Embedding</h3>
+    <p>
+      Given an image of size H × W × C (height, width, channels), we split it
+      into N patches of size P × P:
+    </p>
+
+    <pre>
+N = (H × W) / P²
+
+For a 224×224 image with 16×16 patches:
+N = (224 × 224) / (16 × 16) = 196 patches</pre
+    >
+
+    <p>
+      Each patch is then flattened into a vector of size P² × C = 16 × 16 × 3 =
+      768 dimensions (for RGB images). A linear projection maps this to the
+      model's hidden dimension D:
+    </p>
+
+    <pre>x_patch ∈ ℝ^(P²·C) → z ∈ ℝ^D</pre>
+
+    <h3>2. Position Embeddings</h3>
+    <p>
+      Unlike text, patches have 2D spatial relationships. ViT uses learned 1D
+      position embeddings – each position gets a learnable vector that's added
+      to the patch embedding. Interestingly, the model learns 2D spatial
+      relationships from these 1D embeddings during training.
+    </p>
+
+    <h3>3. The [CLS] Token</h3>
+    <p>
+      Borrowing from BERT, ViT prepends a special classification token to the
+      sequence. After passing through the transformer, this token's
+      representation is used for classification. This is elegant: the [CLS]
+      token learns to aggregate information from all patches through attention.
+    </p>
+
+    <pre>
+z_0 = [x_class; x_1E; x_2E; ...; x_NE] + E_pos
+
+where:
+- x_class: learnable [CLS] token
+- x_nE: patch embeddings (E is the projection matrix)
+- E_pos: position embeddings</pre
+    >
+
+    <h3>4. Transformer Encoder</h3>
+    <p>
+      The sequence of patch embeddings (plus the [CLS] token) is fed into a
+      standard transformer encoder – the same architecture from "Attention Is
+      All You Need." Each layer consists of:
+    </p>
+
+    <ol>
+      <li>Multi-head self-attention</li>
+      <li>MLP (feed-forward network)</li>
+      <li>Layer normalization (applied before each block)</li>
+      <li>Residual connections</li>
+    </ol>
+
+    <h3>5. Classification Head</h3>
+    <p>
+      The final [CLS] token representation goes through a simple MLP head to
+      produce class predictions.
+    </p>
+
+    <h2>What ViT Learns</h2>
+
+    <p>
+      Researchers have analyzed what ViT learns, revealing fascinating patterns:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Learned positional embeddings:</strong> The position embeddings
+        show clear 2D spatial structure, with nearby positions having similar
+        embeddings.
+      </li>
+      <li>
+        <strong>Global attention from the start:</strong> Unlike CNNs that build
+        up receptive fields gradually, even early ViT layers can attend
+        globally. Some heads specialize in local patterns, others in global
+        ones.
+      </li>
+      <li>
+        <strong>Attention distance grows with depth:</strong> Early layers
+        attend more locally on average, while later layers have larger mean
+        attention distances.
+      </li>
+    </ul>
+
+    <p>
+      <strong>🔬 Attention Maps:</strong> Visualizing attention weights shows
+      that ViT learns meaningful patterns. Attention often focuses on
+      semantically relevant regions – the model "looks at" the dog when
+      classifying dog images, even without explicit supervision.
+    </p>
+
+    <h2>The Data Hunger Problem</h2>
+
+    <p>
+      Here's the crucial finding from the ViT paper: on mid-sized datasets like
+      ImageNet-1K (1.2 million images), ViT underperforms well-tuned CNNs like
+      ResNets. Transformers lack the inductive biases (locality, translation
+      equivariance) that make CNNs sample-efficient.
+    </p>
+
+    <p>
+      But when pre-trained on massive datasets (ImageNet-21K with 14 million
+      images, or JFT-300M with 300 million images), ViT matches or exceeds
+      state-of-the-art CNNs:
+    </p>
+
+    <ul>
+      <li>
+        <strong>ViT-H/14 (huge model, 14×14 patches)</strong> achieves 88.55% on
+        ImageNet, with fewer training compute than previous SOTA.
+      </li>
+      <li>
+        On transfer learning benchmarks, pre-trained ViT consistently
+        outperforms pre-trained CNNs.
+      </li>
+    </ul>
+
+    <blockquote>
+      "While large scale training trumps inductive bias, we note that inductive
+      bias is still useful at smaller scales."
+    </blockquote>
+
+    <h2>ViT vs CNNs: When to Use Each</h2>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>ViT</th>
+          <th>CNN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Small datasets</td>
+          <td>❌ Worse</td>
+          <td>✅ Better</td>
+        </tr>
+        <tr>
+          <td>Large-scale pre-training</td>
+          <td>✅ Better</td>
+          <td>❌ Worse</td>
+        </tr>
+        <tr>
+          <td>Inductive bias</td>
+          <td>Minimal</td>
+          <td>Strong (locality)</td>
+        </tr>
+        <tr>
+          <td>Global reasoning</td>
+          <td>✅ Native</td>
+          <td>❌ Requires depth</td>
+        </tr>
+        <tr>
+          <td>Training compute</td>
+          <td>High</td>
+          <td>Lower</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Evolution and Variants</h2>
+
+    <p>Since the original ViT, many variants have emerged:</p>
+
+    <ul>
+      <li>
+        <strong>DeiT (Data-efficient Image Transformers):</strong> Uses
+        knowledge distillation and heavy data augmentation to train ViT
+        efficiently on ImageNet-1K alone.
+      </li>
+      <li>
+        <strong>Swin Transformer:</strong> Introduces hierarchical structure and
+        shifted windows, combining CNN-style local processing with attention.
+        Now widely used as a backbone.
+      </li>
+      <li>
+        <strong>BEiT:</strong> BERT-style pre-training for vision, predicting
+        masked patches.
+      </li>
+      <li>
+        <strong>MAE (Masked Autoencoders):</strong> Self-supervised pre-training
+        by reconstructing masked image patches. Shows that ViT can learn
+        powerful representations even from unlabeled data.
+      </li>
+    </ul>
+
+    <h2>Beyond Classification</h2>
+
+    <p>Vision Transformers' impact extends far beyond image classification:</p>
+
+    <ul>
+      <li>
+        <strong>Object Detection:</strong> DETR uses transformers end-to-end;
+        ViT backbones power state-of-the-art detectors.
+      </li>
+      <li>
+        <strong>Semantic Segmentation:</strong> Transformers provide global
+        context that benefits dense prediction tasks.
+      </li>
+      <li>
+        <strong>Video Understanding:</strong> ViViT and others extend patches to
+        space-time cubes.
+      </li>
+      <li>
+        <strong>Multi-modal Learning:</strong> CLIP, which powers DALL-E and
+        many others, uses ViT for its image encoder.
+      </li>
+      <li>
+        <strong>Generative Models:</strong> Diffusion transformers (DiT) are
+        becoming the backbone of image generation.
+      </li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <p>
+      The Vision Transformer demonstrated that transformers could conquer
+      vision, not through specialized image-processing operations, but through
+      the sheer power of attention and scale. The message is profound: with
+      enough data, simple and general architectures can match or beat
+      specialized ones.
+    </p>
+
+    <p>
+      ViT also revealed something deeper about deep learning: inductive biases
+      are shortcuts that help with limited data, but at scale, models can learn
+      structure from data alone. This insight has influenced thinking across AI
+      research.
+    </p>
+
+    <p>
+      Today, transformers are the default choice for vision tasks at scale, and
+      hybrid architectures that combine the best of ViT and CNNs continue to
+      push the boundaries of what's possible.
+    </p>
+
+    <h3>Further Reading:</h3>
+    <ul>
+      <li>
+        Original Paper: "An Image is Worth 16x16 Words" (Dosovitskiy et al.,
+        2020)
+      </li>
+      <li>DeiT Paper: Training Data-efficient Vision Transformers</li>
+      <li>
+        <a href="attention-is-all-you-need.html"
+          >Our article on the original Transformer architecture</a
+        >
+      </li>
+    </ul>
+  </body>
+</html>
