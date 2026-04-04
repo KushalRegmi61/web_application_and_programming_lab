@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timekeeper Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Timekeeper Hub</h1>
+        <p>Real-time digital clock and countdown timer</p>
+      </header>
+
+      <section class="card" aria-labelledby="clock-title">
+        <h2 id="clock-title">Digital Clock</h2>
+        <p id="date-display" class="date-display">Loading date...</p>
+        <p id="clock-display" class="clock-display">00:00:00</p>
+      </section>
+
+      <section class="card" aria-labelledby="timer-title">
+        <h2 id="timer-title">Countdown Timer</h2>
+
+        <form id="timer-form" class="timer-form">
+          <div class="field-group">
+            <label for="minutes">Minutes</label>
+            <input
+              id="minutes"
+              type="number"
+              min="0"
+              max="180"
+              value="1"
+              required
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="seconds">Seconds</label>
+            <input
+              id="seconds"
+              type="number"
+              min="0"
+              max="59"
+              value="0"
+              required
+            />
+          </div>
+
+          <div class="button-row">
+            <button type="submit" id="start-btn">Start</button>
+            <button type="button" id="pause-btn" class="secondary">
+              Pause
+            </button>
+            <button type="button" id="reset-btn" class="danger">Reset</button>
+          </div>
+        </form>
+
+        <p id="timer-display" class="timer-display">01:00</p>
+        <p id="status-text" class="status-text" aria-live="polite">
+          Timer is ready.
+        </p>
+      </section>
+    </main>
+
+    <script src="index.js"></script>
+  </body>
+</html>
