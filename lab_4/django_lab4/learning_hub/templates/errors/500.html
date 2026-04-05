@@ -1,0 +1,10 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}500 Server Error{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>500 - Internal Server Error</h2>
+    <p>{{ error_message }}</p>
+  </section>
+{% endblock content %}

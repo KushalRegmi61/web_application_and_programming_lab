@@ -1,0 +1,14 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Staff Dashboard | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>Staff Dashboard (Authorization Example)</h2>
+    <ul>
+      <li>Total Courses: {{ total_courses }}</li>
+      <li>Total Documents: {{ total_documents }}</li>
+      <li>Total Users: {{ total_users }}</li>
+    </ul>
+  </section>
+{% endblock content %}

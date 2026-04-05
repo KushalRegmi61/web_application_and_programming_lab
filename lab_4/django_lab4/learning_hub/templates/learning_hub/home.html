@@ -1,0 +1,20 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Home | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>Project Overview</h2>
+    <p>This project demonstrates request/response handling, routing, templating, sessions, cookies, middleware, authentication/authorization, and ORM-based CRUD patterns.</p>
+    <ul>
+      <li><strong>Theme Cookie:</strong> {{ theme_cookie }}</li>
+      <li><strong>Relational Records (Courses):</strong> {{ course_count }}</li>
+      <li><strong>NoSQL-like Documents:</strong> {{ document_count }}</li>
+    </ul>
+    <div class="button-row">
+      <a class="button-link" href="{% url 'learning_hub:set_theme_cookie' 'light' %}">Set Light Theme Cookie</a>
+      <a class="button-link" href="{% url 'learning_hub:set_theme_cookie' 'dark' %}">Set Dark Theme Cookie</a>
+      <a class="button-link" href="{% url 'learning_hub:hello' 'student' %}">Request/Response Demo</a>
+    </div>
+  </section>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Documents | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>NoSQL-like Document CRUD (JSONField)</h2>
+    <p><a class="button-link" href="{% url 'learning_hub:document_create' %}">Create Document</a></p>
+    {% if documents %}
+      <table>
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Owner</th>
+            <th>Payload</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in documents %}
+            <tr>
+              <td>{{ document.label }}</td>
+              <td>{{ document.owner.username }}</td>
+              <td><code>{{ document.payload }}</code></td>
+              <td>
+                <a href="{% url 'learning_hub:document_update' document.pk %}">Edit</a> |
+                <a href="{% url 'learning_hub:document_delete' document.pk %}">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No documents yet.</p>
+    {% endif %}
+  </section>
+{% endblock content %}

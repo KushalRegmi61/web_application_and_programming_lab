@@ -1,0 +1,33 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Session Form | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>Form Data Handling with Sessions</h2>
+    <p><strong>Session Submission Count:</strong> {{ submission_count }}</p>
+    <p><strong>Last Feedback User (Cookie):</strong> {{ last_feedback_user }}</p>
+
+    <form method="post" class="stack-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save Feedback to Session</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>Last 5 Session Entries</h3>
+    {% if feedback_history %}
+      <ul>
+        {% for item in feedback_history %}
+          <li>
+            <strong>{{ item.full_name }}</strong> ({{ item.topic }}) at {{ item.submitted_at }}<br />
+            {{ item.message }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No feedback stored in session yet.</p>
+    {% endif %}
+  </section>
+{% endblock content %}

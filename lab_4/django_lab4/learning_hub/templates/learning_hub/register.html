@@ -1,0 +1,14 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Register | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>Create Account</h2>
+    <form method="post" class="stack-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Register</button>
+    </form>
+  </section>
+{% endblock content %}

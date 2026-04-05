@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Lab 4 Django App{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'learning_hub/styles.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Django Lab 4 Demo</h1>
+      <nav class="nav-links">
+        <a href="{% url 'learning_hub:home' %}">Home</a>
+        <a href="{% url 'learning_hub:feedback' %}">Session Form</a>
+        <a href="{% url 'learning_hub:course_list' %}">Relational CRUD</a>
+        <a href="{% url 'learning_hub:document_list' %}">NoSQL-like CRUD</a>
+        <a href="{% url 'learning_hub:api_status' %}">API Response</a>
+        {% if user.is_staff %}
+          <a href="{% url 'learning_hub:staff_dashboard' %}">Staff Dashboard</a>
+        {% endif %}
+      </nav>
+      <div class="auth-panel">
+        {% if user.is_authenticated %}
+          <span>Logged in as <strong>{{ user.username }}</strong></span>
+          <form method="post" action="{% url 'learning_hub:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'learning_hub:login' %}">Login</a>
+          <a href="{% url 'learning_hub:register' %}">Register</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="page-shell">
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% block content %}{% endblock content %}
+    </main>
+  </body>
+</html>

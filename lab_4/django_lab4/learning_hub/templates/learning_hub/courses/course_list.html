@@ -1,0 +1,45 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Courses | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>Relational Database CRUD (ORM)</h2>
+    {% if user.is_authenticated %}
+      <p><a class="button-link" href="{% url 'learning_hub:course_create' %}">Create Course</a></p>
+    {% endif %}
+
+    {% if courses %}
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Credits</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+            <tr>
+              <td>{{ course.code }}</td>
+              <td>{{ course.title }}</td>
+              <td>{{ course.department|default:"N/A" }}</td>
+              <td>{{ course.credits }}</td>
+              <td>
+                <a href="{% url 'learning_hub:course_detail' course.pk %}">View</a>
+                {% if user.is_staff or user == course.created_by %}
+                  | <a href="{% url 'learning_hub:course_update' course.pk %}">Edit</a>
+                  | <a href="{% url 'learning_hub:course_delete' course.pk %}">Delete</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No courses available yet.</p>
+    {% endif %}
+  </section>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}{{ mode }} Course | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>{{ mode }} Course</h2>
+    <form method="post" class="stack-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{{ mode }} Course</button>
+    </form>
+  </section>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "learning_hub/base.html" %}
+
+{% block title %}Course Detail | Django Lab 4{% endblock title %}
+
+{% block content %}
+  <section class="card">
+    <h2>{{ course.title }} ({{ course.code }})</h2>
+    <p><strong>Department:</strong> {{ course.department|default:"N/A" }}</p>
+    <p><strong>Credits:</strong> {{ course.credits }}</p>
+    <p><strong>Created by:</strong> {{ course.created_by.username }}</p>
+    <p><strong>Description:</strong> {{ course.description|default:"No description." }}</p>
+    <p><a href="{% url 'learning_hub:course_list' %}">Back to list</a></p>
+  </section>
+{% endblock content %}
