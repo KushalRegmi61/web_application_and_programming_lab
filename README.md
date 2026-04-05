@@ -1,126 +1,83 @@
 # Web Application and Programming Lab
 
-This repository contains web development lab assignments demonstrating HTML, CSS, and JavaScript programming skills.
+This repository contains Lab 1 to Lab 6 work for web application and programming coursework, covering static web pages, JavaScript apps, event-driven UI, Django backend development, security-focused PHP examples, and a full-stack CRUD system.
 
-## Repository Structure
+## Labs and Projects (Core Description)
+
+- **Lab 1**: Static website development (portfolio and blog style pages with HTML/CSS).
+- **Lab 2**: Core JavaScript apps (calculator, quiz, random generator, marks analyzer, todo list).
+- **Lab 3**: Event-driven JavaScript mini projects and a combined report.
+- **Lab 4**: Django application demonstrating server-side web concepts and CRUD workflows.
+- **Lab 5**: Web security lab examples focused on XSS, SQL injection, and CSRF concepts.
+- **Lab 6**: Student Record Management System (Django REST API backend + React frontend CRUD).
+
+## Directory Structure (Labs and Projects)
+
+```text
+web_application_and_programming_lab/
+├── lab_1/                       # Static web pages (HTML/CSS)
+│   ├── blogwebsite/             # Blog-style pages
+│   └── portfolio/               # Personal portfolio page
+├── lab_2/                       # JavaScript fundamentals mini apps
+│   ├── claculator/              # Basic calculator app
+│   ├── quiz_app/                # Quiz with scoring logic
+│   ├── random_number_generator/ # Random number utility
+│   ├── student_marks_analyzer/  # Student marks processing app
+│   └── todo_list/               # Task management app
+├── lab_3/                       # Event-driven JavaScript projects
+│   ├── dynamic_table_generator/         # Table creation with dynamic rows
+│   ├── event_driven_color_theme_manager/# Theme switching demo
+│   ├── form_validation_system/          # Client-side validation project
+│   └── timekeeper_hub/                  # Time and event utility app
+├── lab_4/                       # Django server-side development lab
+│   └── django_lab4/             # Main Django workspace
+│       ├── lab4_project/        # Project configuration (settings, urls)
+│       ├── learning_hub/        # App logic, models, views, templates
+│       └── static/              # Shared static assets
+├── lab_5/                       # Web security demonstrations (PHP)
+└── lab_6/                       # Full-stack student record system
+│       ├── lab4_project/        # Project configuration (settings, urls)
+│       ├── learning_hub/        # App logic, models, views, templates
+│       ├── backend/                 # Django REST API backend   
+│       └──  frontend/                # React + Vite frontend
 
 ```
-├── lab_1/                              # Static Website Development
-│   ├── blogwebsite/                    # AI/ML Blog Website
-│   │   ├── index.html                  # Blog homepage
-│   │   ├── attention-is-all-you-need.html
-│   │   └── vision-transformer.html
-│   ├── portfolio/                      # Personal Portfolio Website
-│   │   ├── index.html
-│   │   └── styles.css
-│   ├── BLOG_WEBSITE_REPORT.md
-│   └── PORTFOLIO_REPORT.md
-│
-└── lab_2/                              # JavaScript Interactive Applications
-    ├── claculator/                     # Smart Calculator with History
-    │   ├── index.html
-    │   ├── index.js
-    │   └── styles.css
-    ├── quiz_app/                       # Interactive Quiz Application
-    │   ├── index.html
-    │   └── index.js
-    ├── random_number_generator/        # Random Number Generator
-    │   ├── index.html
-    │   └── index.js
-    ├── student_marks_analyzer/         # Student Marks Analysis Tool
-    │   ├── index.html
-    │   └── index.js
-    ├── todo_list/                      # Todo List Application
-    │   ├── index.html
-    │   └── index.js
-    └── report/
-        └── LAB_REPORT.md               # Detailed lab report
+
+## Dependencies
+
+### Python / Django (for backend labs)
+- Django
+- djangorestframework
+- django-cors-headers
+
+Install using:
+```cmd
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirement.txt
 ```
 
-## Lab 1: Static Website Development
+### React / Frontend (for Lab 6)
+- react
+- react-dom
+- axios
+- vite
 
-### Blog Website
-A multi-page blog website focusing on AI/ML topics, featuring articles about:
-- Transformer Architecture ("Attention Is All You Need")
-- Vision Transformers (ViT)
+Install and run (Lab 6 frontend):
+```cmd
+cd lab_6\frontend
+npm install
+npm run dev
+```
 
-**Key Features:**
-- Clean HTML structure
-- Multi-page navigation
-- Content-focused design
-
-### Portfolio Website
-Personal portfolio website showcasing:
-- Professional profile and bio
-- Technical skills and expertise
-- Work experience and internships
-- Educational background
-- Contact information
-
-**Technologies:** HTML5, CSS3
-
-## Lab 2: JavaScript Interactive Applications
-
-### 1. Smart Calculator
-A feature-rich calculator application with:
-- Basic arithmetic operations (+, -, ×, ÷)
-- Calculation history (stores last 5 calculations)
-- Error handling (division by zero)
-- Clear and delete functionality
-
-### 2. Quiz Application
-Interactive quiz with:
-- Multiple-choice questions
-- Score tracking
-- Immediate feedback
-- Result display
-
-### 3. Random Number Generator
-Utility tool that generates random numbers within a specified range with customizable parameters.
-
-### 4. Student Marks Analyzer
-Analyzes student performance data:
-- Calculates average marks
-- Determines pass/fail status
-- Generates statistical insights
-- Displays results dynamically
-
-### 5. Todo List
-Task management application featuring:
-- Add/delete tasks
-- Mark tasks as complete
-- Persistent task list
-- Clean user interface
-
-## Technologies Used
-
-- **HTML5** - Structure and content
-- **CSS3** - Styling and layout
-- **JavaScript** - Interactivity and logic
-- **DOM Manipulation** - Dynamic content updates
-- **Event Handling** - User interactions
-- **Arrays and Objects** - Data management
-
-## How to Run
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/KushalRegmi61/web_application_and_programming_lab.git
-   ```
-
-2. Navigate to any project folder:
-   ```bash
-   cd lab_1/blogwebsite
-   # or
-   cd lab_2/calculator
-   ```
-
-3. Open the `index.html` file in your web browser
+Run backend (Lab 6):
+```cmd
+cd lab_6\backend
+..\..\.venv\Scripts\python manage.py runserver
+```
 
 ## Author
-
 Kushal Regmi
 
 ## License
-
-This project is licensed under the terms specified in the LICENSE file.
+This project is licensed under the terms in the LICENSE file.
