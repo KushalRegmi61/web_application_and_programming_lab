@@ -3,3 +3,24 @@
 *pdf
 
 .vscode/
+*.md
+*.png
+*.pdf
+
+.vscode/
+
+# LaTeX report build artifacts
+*.tex
+*.svg
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+__pycache__/
+*.pyc
