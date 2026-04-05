@@ -1,0 +1,151 @@
+:root {
+  --bg-color: #f4f7fb;
+  --text-color: #1d2433;
+  --button-color: #0b7a75;
+  --surface-color: #ffffff;
+  --border-color: #d7deea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", "Trebuchet MS", sans-serif;
+  color: var(--text-color);
+  background:
+    radial-gradient(circle at 15% 20%, #ffffff 0%, rgba(255, 255, 255, 0) 35%),
+    radial-gradient(circle at 85% 0%, #dbe7ff 0%, rgba(219, 231, 255, 0) 33%),
+    var(--bg-color);
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.container {
+  width: min(760px, 100%);
+}
+
+.card {
+  background: color-mix(in srgb, var(--surface-color) 90%, var(--bg-color) 10%);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.4rem;
+  box-shadow: 0 16px 34px rgba(20, 30, 48, 0.1);
+  animation: fade-in-up 0.5s ease;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
+}
+
+.subtitle {
+  margin: 0.35rem 0 1rem;
+  opacity: 0.8;
+}
+
+.theme-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.field-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-group label {
+  font-weight: 600;
+}
+
+input[type="color"] {
+  width: 100%;
+  min-height: 2.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+#preview-btn {
+  background: var(--button-color);
+  color: #ffffff;
+}
+
+.secondary {
+  background: #3f4f63;
+  color: #ffffff;
+  align-self: end;
+}
+
+.preview,
+.theme-object {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.preview {
+  margin-bottom: 0.9rem;
+}
+
+.preview p {
+  margin: 0.45rem 0 0.9rem;
+}
+
+.theme-object h2 {
+  margin-bottom: 0.55rem;
+}
+
+#theme-output {
+  margin: 0;
+  background: #151e2e;
+  color: #f8fafc;
+  border-radius: 10px;
+  padding: 0.85rem;
+  overflow: auto;
+  font-size: 0.92rem;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-controls {
+    grid-template-columns: 1fr;
+  }
+}

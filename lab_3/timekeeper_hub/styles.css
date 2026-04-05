@@ -1,13 +1,12 @@
 :root {
-  --bg-1: #f9f4ec;
-  --bg-2: #e6f1f5;
+  --bg: #f4f4f4;
   --card: #ffffff;
-  --ink: #1f2a44;
-  --muted: #5a6475;
-  --accent: #0f766e;
-  --accent-2: #0b4f6c;
-  --danger: #b42318;
-  --shadow: 0 18px 40px rgba(31, 42, 68, 0.12);
+  --text: #222222;
+  --muted: #666666;
+  --primary: #2d6a4f;
+  --secondary: #495057;
+  --danger: #b02a37;
+  --border: #dddddd;
 }
 
 * {
@@ -17,45 +16,42 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--ink);
-  background: radial-gradient(circle at top left, var(--bg-1) 15%, transparent 45%),
-    radial-gradient(circle at bottom right, var(--bg-2) 20%, transparent 45%),
-    linear-gradient(135deg, #fdfdfd, #f5f7fb);
+  font-family: Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 .container {
-  width: min(960px, 92%);
-  margin: 2rem auto;
+  width: min(900px, 92%);
+  margin: 1.5rem auto;
   display: grid;
-  gap: 1.25rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
 .hero {
   grid-column: 1 / -1;
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  color: #fff;
-  border-radius: 16px;
-  padding: 1.3rem 1.5rem;
-  box-shadow: var(--shadow);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
 }
 
 .hero h1 {
-  margin: 0 0 0.3rem;
-  font-size: clamp(1.4rem, 2vw + 1rem, 2rem);
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
 }
 
 .hero p {
   margin: 0;
-  opacity: 0.94;
+  color: var(--muted);
 }
 
 .card {
   background: var(--card);
-  border-radius: 16px;
-  padding: 1.25rem;
-  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
 }
 
 .card h2 {
@@ -63,25 +59,25 @@ body {
 }
 
 .date-display {
-  margin: 0.3rem 0 0.5rem;
+  margin: 0.25rem 0 0.4rem;
   color: var(--muted);
 }
 
 .clock-display {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
 }
 
 .timer-form {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.8rem;
 }
 
 .field-group {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 label {
@@ -90,36 +86,34 @@ label {
 
 input {
   width: 100%;
-  padding: 0.6rem 0.7rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
 .button-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 button {
   border: none;
-  border-radius: 10px;
-  padding: 0.58rem 0.95rem;
+  border-radius: 6px;
+  padding: 0.55rem 0.85rem;
   font-weight: 600;
+  color: #ffffff;
+  background: var(--primary);
   cursor: pointer;
-  color: #fff;
-  background: var(--accent);
-  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 button:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
+  opacity: 0.9;
 }
 
 button.secondary {
-  background: #334155;
+  background: var(--secondary);
 }
 
 button.danger {
@@ -127,8 +121,8 @@ button.danger {
 }
 
 .timer-display {
-  margin: 1.1rem 0 0.3rem;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin: 1rem 0 0.25rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 
@@ -144,12 +138,15 @@ button.danger {
 
 @media (max-width: 560px) {
   .container {
-    width: 94%;
     margin: 1rem auto;
   }
 
-  .card,
-  .hero {
-    padding: 1rem;
+  .hero,
+  .card {
+    padding: 0.9rem;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
   }
 }

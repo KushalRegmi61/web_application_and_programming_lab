@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 9 - Form Validation System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card" aria-labelledby="form-title">
+        <h1 id="form-title">Form Validation System</h1>
+        <p class="subtitle">
+          Validate name, email, and password using Vanilla JavaScript.
+        </p>
+
+        <form id="signup-form" novalidate>
+          <div class="field-group">
+            <label for="name">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+            />
+            <p id="name-error" class="error-text" aria-live="polite"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="example@email.com"
+            />
+            <p id="email-error" class="error-text" aria-live="polite"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="At least 8 characters"
+            />
+            <p id="password-error" class="error-text" aria-live="polite"></p>
+          </div>
+
+          <button type="submit">Submit</button>
+          <p id="form-message" class="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="index.js"></script>
+  </body>
+</html>

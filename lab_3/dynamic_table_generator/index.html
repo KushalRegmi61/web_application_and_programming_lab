@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Table Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Dynamic Table Generator</h1>
+        <p>Assignment 7: Build and control a table dynamically with JavaScript.</p>
+      </header>
+
+      <section class="card" aria-labelledby="table-config-title">
+        <h2 id="table-config-title">Table Configuration</h2>
+        <form id="table-form" class="table-form">
+          <div class="field-group">
+            <label for="rows">Rows</label>
+            <input id="rows" type="number" min="1" value="3" required />
+          </div>
+
+          <div class="field-group">
+            <label for="columns">Columns</label>
+            <input id="columns" type="number" min="1" value="4" required />
+          </div>
+
+          <button type="submit">Generate Table</button>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="table-actions-title">
+        <h2 id="table-actions-title">Actions</h2>
+
+        <div class="button-row">
+          <button type="button" id="add-row-btn" disabled>Add Row</button>
+          <button type="button" id="delete-row-btn" class="secondary" disabled>
+            Delete Row
+          </button>
+          <button type="button" id="highlight-even-btn" class="accent" disabled>
+            Highlight Even Rows
+          </button>
+        </div>
+
+        <p id="status-text" class="status-text" aria-live="polite">
+          Enter row and column values, then click Generate Table.
+        </p>
+
+        <div class="table-wrapper">
+          <table id="dynamic-table" aria-label="Generated table"></table>
+        </div>
+      </section>
+    </main>
+
+    <script src="index.js"></script>
+  </body>
+</html>
