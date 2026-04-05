@@ -72,8 +72,10 @@ npm run dev
 
 Run backend (Lab 6):
 ```cmd
+.venv\Scripts\activate
 cd lab_6\backend
-..\..\.venv\Scripts\python manage.py runserver
+
+python manage.py runserver
 ```
 
 ## Author
