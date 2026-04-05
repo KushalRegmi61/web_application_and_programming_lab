@@ -54,7 +54,7 @@ Install using:
 ```cmd
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 ### React / Frontend (for Lab 6)
