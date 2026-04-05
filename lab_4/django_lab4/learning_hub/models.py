@@ -1,16 +1,23 @@
 from django.conf import settings
 from django.db import models
 
+DEPARTMENT_CODE_CHOICES = (
+    ("BCT", "BCT"),
+    ("BEI", "BEI"),
+    ("BCE", "BCE"),
+    ("BME", "BME"),
+)
+
 
 class Department(models.Model):
     name = models.CharField(max_length=120)
-    code = models.CharField(max_length=20, unique=True)
+    code = models.CharField(max_length=3, unique=True, choices=DEPARTMENT_CODE_CHOICES)
 
     class Meta:
         ordering = ("name",)
 
     def __str__(self):
-        return f"{self.name} ({self.code})"
+        return f"{self.code} - {self.name}"
 
 
 class Course(models.Model):
